@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        /* General Page Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+/* Chat Container */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Chat Box */
+.chat-box {
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Messages */
+.message {
+    max-width: 75%;
+    padding: 8px 12px;
+    border-radius: 12px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* Stranger Message */
+.message.stranger {
+    background-color: #e0e0e0;
+    align-self: flex-start;
+}
+
+/* Your Message */
+.message.you {
+    background-color: #007bff;
+    color: white;
+    align-self: flex-end;
+}
+
+/* Input Area */
+.input-container {
+    border-top: 1px solid #ddd;
+}
+
+#messageInput {
+    font-size: 14px;
+}
+
+#sendButton {
+    white-space: nowrap;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container-fluid vh-100 d-flex flex-column">
+        <!-- Header -->
+        <div class="text-center py-3 bg-dark text-white">
+            <h4>Omegle-like Chat</h4>
+        </div>
+
+        <!-- Chat Container -->
+        <div class="chat-container flex-grow-1 d-flex flex-column">
+            <!-- Messages -->
+            <div id="messages" class="chat-box flex-grow-1 p-3 overflow-auto">
+                <!-- Example Messages -->
+                <div class="message stranger">Stranger: Hello!</div>
+                <div class="message you">You: Hi there!</div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-container d-flex p-3 bg-light">
+                <input type="text" id="messageInput" class="form-control me-2" placeholder="Type a message...">
+                <button id="sendButton" class="btn btn-primary">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+    const $messages = $('#messages');
+    const $messageInput = $('#messageInput');
+
+    // Send message on button click
+    $('#sendButton').click(function () {
+        const message = $messageInput.val().trim();
+        if (message !== '') {
+            // Add message to the chat box
+            $messages.append(`<div class="message you">You: ${message}</div>`);
+
+            // Clear the input field
+            $messageInput.val('');
+
+            // Scroll to the bottom
+            $messages.scrollTop($messages[0].scrollHeight);
+
+            // Simulate Stranger Response
+            setTimeout(() => {
+                $messages.append('<div class="message stranger">Stranger: This is a response!</div>');
+                $messages.scrollTop($messages[0].scrollHeight);
+            }, 1000);
+        }
+    });
+
+    // Send message on Enter key press
+    $messageInput.keypress(function (e) {
+        if (e.which === 13) {
+            e.preventDefault();
+            $('#sendButton').click();
+        }
+    });
+});
+
+    </script>
+</body>
+</html>
